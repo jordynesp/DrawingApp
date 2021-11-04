@@ -5,6 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/**
+ * The main application class.
+ */
 public class DrawingApp extends Application {
     @Override
     public void start(Stage stage) {
