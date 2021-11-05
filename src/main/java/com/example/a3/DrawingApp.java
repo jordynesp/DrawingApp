@@ -2,7 +2,6 @@ package com.example.a3;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -12,10 +11,10 @@ public class DrawingApp extends Application {
     @Override
     public void start(Stage stage) {
 
-        StackPane temp = new StackPane();
+        MainUI mainUI = new MainUI();
 
-        Scene scene = new Scene(temp, 320, 240);
-        stage.setTitle("Drawing Application!");
+        Scene scene = new Scene(mainUI, 650, 500);
+        stage.setTitle("Drawing Application");
         stage.setScene(scene);
         stage.show();
     }
