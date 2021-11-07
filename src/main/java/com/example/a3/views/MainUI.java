@@ -1,4 +1,4 @@
-package com.example.a3;
+package com.example.a3.views;
 
 import javafx.scene.layout.BorderPane;
 
@@ -12,6 +12,7 @@ public class MainUI extends BorderPane {
     private ColourToolbar colourToolbar;
 
     public MainUI() {
+        // create the toolbar and canvas views to store
         shapeToolbar = new ShapeToolbar();
         drawingView = new DrawingView();
         colourToolbar = new ColourToolbar();
@@ -20,7 +21,6 @@ public class MainUI extends BorderPane {
         this.setCenter(drawingView);
         this.setRight(colourToolbar);
 
-
-        this.setPrefSize(600, 500);
+        this.setPrefSize(624, 500);
     }
 }

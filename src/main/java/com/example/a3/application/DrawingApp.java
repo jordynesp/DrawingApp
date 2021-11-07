@@ -1,5 +1,6 @@
-package com.example.a3;
+package com.example.a3.application;
 
+import com.example.a3.views.MainUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ public class DrawingApp extends Application {
 
         MainUI mainUI = new MainUI();
 
-        Scene scene = new Scene(mainUI, 650, 500);
+        Scene scene = new Scene(mainUI, 624, 500);
         stage.setTitle("Drawing Application");
         stage.setScene(scene);
         stage.show();
