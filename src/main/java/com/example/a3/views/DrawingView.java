@@ -1,5 +1,6 @@
-package com.example.a3;
+package com.example.a3.views;
 
+import com.example.a3.models.InteractionModel;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Background;
@@ -17,14 +18,16 @@ public class DrawingView extends StackPane {
 
     private InteractionModel iModel;
 
-
+    /**
+     * Constructor for DrawingView
+     */
     public DrawingView() {
         myCanvas = new Canvas(500, 500);
         gc = myCanvas.getGraphicsContext2D();
         gc.setLineWidth(5.0);
         this.getChildren().addAll(myCanvas);
         this.setPrefSize(500, 500);
-        this.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+        this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
 
     }
 
