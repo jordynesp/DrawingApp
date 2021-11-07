@@ -1,15 +1,21 @@
 package com.example.a3.views;
 
+import com.example.a3.controllers.DrawingController;
+import com.example.a3.models.DrawingModel;
+import com.example.a3.models.InteractionModel;
+import com.example.a3.models.ModelSubscriber;
 import javafx.scene.layout.BorderPane;
 
 /**
  * A view that contains and lays out the shape toolbar,
  * the drawing surface, and the colour toolbar.
  */
-public class MainUI extends BorderPane {
+public class MainUI extends BorderPane implements ModelSubscriber {
     private ShapeToolbar shapeToolbar;
     private DrawingView drawingView;
     private ColourToolbar colourToolbar;
+    private DrawingModel model;
+    private InteractionModel iModel;
 
     public MainUI() {
         // create the toolbar and canvas views to store
@@ -23,4 +29,48 @@ public class MainUI extends BorderPane {
 
         this.setPrefSize(624, 500);
     }
+
+    /**
+     * Associate a model to the view
+     * @param newModel the drawing model information
+     */
+    public void setModel(DrawingModel newModel) {
+        model = newModel;
+        shapeToolbar.setModel(newModel);
+        drawingView.setModel(newModel);
+        colourToolbar.setModel(newModel);
+        model.addSub(shapeToolbar);
+        model.addSub(colourToolbar);
+        model.addSub(drawingView);
+    }
+
+    /**
+     * Associate an interaction model to the view
+     * @param newIModel interaction model
+     */
+    public void setInteractionModel(InteractionModel newIModel) {
+        iModel = newIModel;
+        shapeToolbar.setInteractionModel(newIModel);
+        drawingView.setInteractionModel(newIModel);
+        colourToolbar.setInteractionModel(newIModel);
+        iModel.addSub(shapeToolbar);
+        iModel.addSub(colourToolbar);
+        iModel.addSub(drawingView);
+    }
+
+    /**
+     * Set a controller for the view
+     * @param newController the controller
+     */
+    public void setController(DrawingController newController) {
+        shapeToolbar.setController(newController);
+        drawingView.setController(newController);
+        colourToolbar.setController(newController);
+    }
+
+    /**
+     * Updates view based on model changes
+     */
+    public void modelChanged() {}
+
 }

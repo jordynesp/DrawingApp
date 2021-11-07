@@ -1,5 +1,9 @@
 package com.example.a3.views;
 
+import com.example.a3.controllers.DrawingController;
+import com.example.a3.models.DrawingModel;
+import com.example.a3.models.InteractionModel;
+import com.example.a3.models.ModelSubscriber;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
@@ -14,7 +18,9 @@ import java.util.ArrayList;
  * A view that contains buttons for showing
  * and selecting a shape tool for drawing.
  */
-public class ShapeToolbar extends StackPane {
+public class ShapeToolbar extends StackPane implements ModelSubscriber {
+    private DrawingModel model;
+    private InteractionModel iModel;
     private ArrayList<ToggleButton> buttonList;
     private ToggleGroup toggles;
     private Rectangle rect;
@@ -102,5 +108,37 @@ public class ShapeToolbar extends StackPane {
         this.getChildren().addAll(buttons);
         this.setPrefSize(61, 500);
     }
+
+    /**
+     * Associate a model to the view
+     * @param newModel the drawing model information
+     */
+    public void setModel(DrawingModel newModel) {
+        model = newModel;
+    }
+
+    /**
+     * Associate an interaction model to the view
+     * @param newIModel interaction model
+     */
+    public void setInteractionModel(InteractionModel newIModel) {
+        iModel = newIModel;
+    }
+
+    /**
+     * Set a controller for the view
+     * @param newController the controller
+     */
+    public void setController(DrawingController newController) {
+
+    }
+
+    /**
+     * Update view based on model changes
+     */
+    public void modelChanged() {
+
+    }
+
 
 }
