@@ -4,15 +4,12 @@ import com.example.a3.controllers.DrawingController;
 import com.example.a3.models.DrawingModel;
 import com.example.a3.models.InteractionModel;
 import com.example.a3.models.ModelSubscriber;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A view that contains buttons for showing
@@ -21,89 +18,66 @@ import java.util.ArrayList;
 public class ShapeToolbar extends StackPane implements ModelSubscriber {
     private DrawingModel model;
     private InteractionModel iModel;
-    private ArrayList<ToggleButton> buttonList;
+    private HashMap<ToggleButton, ShapeButtonView> buttonShapes;
     private ToggleGroup toggles;
-    private Rectangle rect;
-    private Rectangle square;
-    private Circle circle;
-    private Ellipse oval;
-    private Line line;
 
     /**
      * Constructor for ShapeToolbar class
      */
     public ShapeToolbar() {
-        buttonList = new ArrayList<>();
         toggles = new ToggleGroup();
+        buttonShapes = new HashMap<>();
         VBox buttons = new VBox();
 
         // create a button for each shape
         String[] shapeNames = {"Rect", "Square", "Circle", "Oval", "Line"};
         for (String shape : shapeNames) {
-            VBox root = new VBox();
-            root.setAlignment(Pos.CENTER);
-            // create the shape for the proper button
             Shape buttonShape;
+            // create the shape for the proper button
             switch (shape) {
-                case "Rect" -> {
-                    rect = new Rectangle(40, 25);
-                    buttonShape = rect;
-                }
-                case "Square" -> {
-                    square = new Rectangle(30, 30);
-                    buttonShape = square;
-                }
-                case "Circle" -> {
-                    circle = new Circle(0, 0, 17);
-                    buttonShape = circle;
-                }
-                case "Oval" -> {
-                    oval = new Ellipse(20, 12);
-                    buttonShape = oval;
-                }
-                case "Line" -> {
-                    line = new Line(0, 0, 25, 25);
-                    buttonShape = line;
-                }
+                case "Rect" -> buttonShape = new Rectangle(40, 25);
+                case "Square" -> buttonShape = new Rectangle(30, 30);
+                case "Circle" -> buttonShape = new Circle(0, 0, 17);
+                case "Oval" -> buttonShape = new Ellipse(20, 12);
+                case "Line" -> buttonShape = new Line(0, 0, 25, 25);
                 default -> buttonShape = null;
             }
-            root.getChildren().addAll(buttonShape, new Label(shape));
-            ToggleButton button = new ToggleButton("", root);
+            // create a button for each shape
+            ShapeButtonView buttonGraphic = new ShapeButtonView(buttonShape, shape);
+            ToggleButton button = new ToggleButton("", buttonGraphic);
             button.setToggleGroup(toggles);
-            buttonList.add(button);
+            buttonShapes.put(button, buttonGraphic);
             buttons.getChildren().add(button);
+
+            // set the first shape as the selection default
+            if (shape.equals("Rect")) {
+                button.setSelected(true);
+                // highlight the border of the selected button
+                button.setBorder(new Border(new BorderStroke(Color.valueOf("Aqua"), BorderStrokeStyle.SOLID,
+                        null, new BorderWidths(2))));
+                buttonShapes.get(button).getButtonShape().setFill(Color.valueOf("Aqua"));
+            }
         }
 
         // make the buttons adjust to fill vertical space
         this.heightProperty().addListener( (observable, oldValue, newValue) -> {
-            for (ToggleButton button : buttonList) {
+            for (ToggleButton button : buttonShapes.keySet()) {
                 button.setPrefHeight(this.getHeight()/5);
             }
         });
 
+        // make sure there is always a button selected
+        toggles.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                oldValue.setSelected(true);
+            }
+        });
+
         // set the width of buttons to fill all available space
-        for (ToggleButton button : buttonList) {
+        for (ToggleButton button : buttonShapes.keySet()) {
             button.setMaxWidth(Double.MAX_VALUE);
         }
 
-        // add selection borders for the selected button
-        for (ToggleButton b : buttonList) {
-            b.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID,
-                    null, new BorderWidths(2))));
-            b.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                // set the other buttons borders back to neutral
-                for (ToggleButton button : buttonList) {
-                    button.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID,
-                            null, new BorderWidths(2))));
-                }
-                // highlight the border of the selected button
-                b.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
-                        null, new BorderWidths(2))));
-            });
-        }
-
-        // set the first shape as the selection default
-        buttonList.get(0).setSelected(true);
         // make buttons visible
         this.getChildren().addAll(buttons);
         this.setPrefSize(61, 500);
@@ -123,6 +97,13 @@ public class ShapeToolbar extends StackPane implements ModelSubscriber {
      */
     public void setInteractionModel(InteractionModel newIModel) {
         iModel = newIModel;
+        // initialize iModel selection
+        for (ToggleButton button : buttonShapes.keySet()) {
+            if (buttonShapes.get(button).getShapeName().equals("Rect")) {
+                iModel.setSelectedToolShape(buttonShapes.get(button).getButtonShape(),
+                        buttonShapes.get(button).getShapeName());
+            }
+        }
     }
 
     /**
@@ -130,14 +111,33 @@ public class ShapeToolbar extends StackPane implements ModelSubscriber {
      * @param newController the controller
      */
     public void setController(DrawingController newController) {
-
+        // set the border of the selected button
+        for (ToggleButton button : buttonShapes.keySet()) {
+            button.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                newController.handleSelectedToolShape(buttonShapes.get(button).getButtonShape(),
+                        buttonShapes.get(button).getShapeName());
+            });
+        }
     }
 
     /**
      * Update view based on model changes
      */
     public void modelChanged() {
-
+        // set the other buttons borders back to neutral
+        for (ToggleButton button : buttonShapes.keySet()) {
+            button.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID,
+                    null, new BorderWidths(2))));
+            Shape shape = buttonShapes.get(button).getButtonShape();
+            shape.setFill(Color.BLACK);
+            shape.setStroke(Color.BLACK);
+        }
+        // set the border for the selected button
+        ((ToggleButton) toggles.getSelectedToggle()).setBorder(new Border(new BorderStroke(iModel.getSelectedColour(),
+                BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
+        Shape selection = buttonShapes.get((ToggleButton) toggles.getSelectedToggle()).getButtonShape();
+        selection.setFill(iModel.getSelectedColour());
+        selection.setStroke(iModel.getSelectedColour());
     }
 
 

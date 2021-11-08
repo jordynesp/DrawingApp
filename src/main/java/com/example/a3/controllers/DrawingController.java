@@ -2,6 +2,9 @@ package com.example.a3.controllers;
 
 import com.example.a3.models.DrawingModel;
 import com.example.a3.models.InteractionModel;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 
 /**
  * The controller to handle events from the view classes.
@@ -9,8 +12,10 @@ import com.example.a3.models.InteractionModel;
 public class DrawingController {
     private DrawingModel model;
     private InteractionModel iModel;
+
     private enum State {
         READY
+        // ready, moving, prepare_create, resizing
     }
 
     private State currentState;
@@ -37,4 +42,20 @@ public class DrawingController {
     public void setInteractionModel(InteractionModel newIModel) {
         iModel = newIModel;
     }
+
+    /**
+     * Set the selected colour
+     */
+    public void handleSelectedColour(Color newColour) {
+        iModel.setSelectedColour(newColour);
+    }
+
+    /**
+     * Set the selected shape in the toolbar
+     * @param shape selected shape
+     */
+    public void handleSelectedToolShape(Shape shape, String name) {
+        iModel.setSelectedToolShape(shape, name);
+    }
+
 }

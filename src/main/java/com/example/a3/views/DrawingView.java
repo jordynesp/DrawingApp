@@ -31,6 +31,22 @@ public class DrawingView extends StackPane implements ModelSubscriber {
         this.getChildren().addAll(myCanvas);
         this.setPrefSize(500, 500);
         this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+        draw();
+    }
+
+    /**
+     * Draws the shapes onto the canvas in immediate-mode graphics
+     */
+    public void draw() {
+        double width = this.getWidth();
+        double height = this.getHeight();
+        gc.clearRect(0, 0, width, height);
+        gc.setStroke(Color.BLACK);
+//        gc.strokeRect(0, 0, width, height);
+        gc.setFill(Color.HOTPINK);
+        gc.fillRect(30, 30, 40, 40);
+        gc.strokeRect(30, 30, 40, 40);
+
 
     }
 
@@ -62,7 +78,7 @@ public class DrawingView extends StackPane implements ModelSubscriber {
      * Update view based on model changes
      */
     public void modelChanged() {
-
+        draw();
     }
 
 }

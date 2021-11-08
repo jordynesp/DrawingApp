@@ -1,5 +1,8 @@
 package com.example.a3.models;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
+
 import java.util.ArrayList;
 
 /**
@@ -7,6 +10,9 @@ import java.util.ArrayList;
  */
 public class InteractionModel {
     private ArrayList<ModelSubscriber> subs;
+    private Color selectedColour;
+    private Shape selectedToolShape;
+    private String selectedShapeName;
 
     /**
      * Constructor for InteractionModel
@@ -30,5 +36,46 @@ public class InteractionModel {
         subs.forEach(ModelSubscriber::modelChanged);
     }
 
+    /**
+     * Set the selected colour
+     * @param newColour selected colour
+     */
+    public void setSelectedColour(Color newColour) {
+        selectedColour = newColour;
+        notifySubscribers();
+    }
 
+    /**
+     * Get the selected colour
+     * @return the selected colour
+     */
+    public Color getSelectedColour() {
+        return selectedColour;
+    }
+
+    /**
+     * Set the selected toolbar shape
+     * @param shape selected toolbar shape
+     */
+    public void setSelectedToolShape(Shape shape, String name) {
+        selectedToolShape = shape;
+        selectedShapeName = name;
+        notifySubscribers();
+    }
+
+    /**
+     * Get the selected toolbar shape
+     * @return selected toolbar shape
+     */
+    public Shape getSelectedToolShape() {
+        return selectedToolShape;
+    }
+
+    /**
+     * Get the selected toolbar shape name
+     * @return selected toolbar shape name
+     */
+    public String getSelectedShapeName() {
+        return selectedShapeName;
+    }
 }
