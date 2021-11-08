@@ -27,6 +27,14 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         this.setCenter(drawingView);
         this.setRight(colourToolbar);
 
+        // make the canvas view resize based on the main application
+        this.widthProperty().addListener((observable, oldValue, newValue) -> {
+            drawingView.setPrefWidth(newValue.doubleValue()-shapeToolbar.getWidth()-colourToolbar.getWidth());
+        });
+        this.heightProperty().addListener((observable, oldValue, newValue) -> {
+            drawingView.setPrefHeight(newValue.doubleValue());
+        });
+
         this.setPrefSize(624, 500);
     }
 

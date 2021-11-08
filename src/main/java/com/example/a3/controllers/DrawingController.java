@@ -2,7 +2,6 @@ package com.example.a3.controllers;
 
 import com.example.a3.models.DrawingModel;
 import com.example.a3.models.InteractionModel;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
@@ -14,7 +13,7 @@ public class DrawingController {
     private InteractionModel iModel;
 
     private enum State {
-        READY
+        READY, PREPARE_CREATE, RESIZING
         // ready, moving, prepare_create, resizing
     }
 
