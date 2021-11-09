@@ -52,16 +52,13 @@ public class DrawingModel {
     public XShape createShape(double normX, double normY, String selectedShapeName, Color selectedColour) {
         XShape shape;
         switch (selectedShapeName) {
-            case "Rect" -> {
-                // create a rectangle
-                XRectangle rect = new XRectangle(normX, normY, 0.0, 0.0);
-                rect.setColourName(selectedColour);
-                rect.setShapeName(selectedShapeName);
-                shapes.add(rect);
-                shape = rect;
-            }
+            case "Rect" -> shape = new XRectangle(normX, normY, 0.0, 0.0);
+            case "Oval" -> shape = new XOval(normX, normY, 0.0, 0.0);
             default -> shape = null;
         }
+        shape.setColourName(selectedColour);
+        shape.setShapeName(selectedShapeName);
+        shapes.add(shape);
         notifySubscribers();
         return shape;
     }

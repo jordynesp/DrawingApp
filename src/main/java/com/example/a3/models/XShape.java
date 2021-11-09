@@ -12,13 +12,16 @@ public abstract class XShape {
 
     /**
      * Constructor for XShape
+     * @param newX initial x location
+     * @param newY initial y location
+     * @param newWidth width of shape
+     * @param newHeight height of shape
      */
     public XShape(double newX, double newY, double newWidth, double newHeight) {
         x = newX;
         y = newY;
         width = newWidth;
         height = newHeight;
-        colourName = null;
     }
 
     /**
