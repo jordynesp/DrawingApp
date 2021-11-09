@@ -54,6 +54,7 @@ public class DrawingModel {
         switch (selectedShapeName) {
             case "Rect" -> shape = new XRectangle(normX, normY, 0.0, 0.0);
             case "Square" -> shape = new XSquare(normX, normY, 0.0, 0.0);
+            case "Circle" -> shape = new XCircle(normX, normY, 0.0, 0.0);
             case "Oval" -> shape = new XOval(normX, normY, 0.0, 0.0);
             case "Line" -> shape = new XLine(normX, normY, normX, normY);
             default -> shape = null;

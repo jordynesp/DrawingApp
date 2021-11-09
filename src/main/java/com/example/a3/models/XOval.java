@@ -25,7 +25,6 @@ public class XOval extends XShape {
      * @param newY new height location
      */
     public void resize(double newX, double newY) {
-        // keep track of initial top/left location
         x = initialX;
         y = initialY;
         width = newX - initialX;
@@ -39,6 +38,4 @@ public class XOval extends XShape {
             height = initialY - newY;
         }
     }
-
-
 }

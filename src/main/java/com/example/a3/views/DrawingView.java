@@ -53,7 +53,7 @@ public class DrawingView extends StackPane implements ModelSubscriber {
                     gc.fillRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                     gc.strokeRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                 }
-                case "Oval" -> {
+                case "Circle", "Oval" -> {
                     gc.fillOval(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                     gc.strokeOval(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                 }
