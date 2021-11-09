@@ -54,6 +54,7 @@ public class DrawingModel {
         switch (selectedShapeName) {
             case "Rect" -> shape = new XRectangle(normX, normY, 0.0, 0.0);
             case "Oval" -> shape = new XOval(normX, normY, 0.0, 0.0);
+            case "Line" -> shape = new XLine(normX, normY, normX, normY);
             default -> shape = null;
         }
         shape.setColourName(selectedColour);
