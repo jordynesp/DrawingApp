@@ -15,6 +15,7 @@ public class XRectangle extends XShape {
      */
     public XRectangle(double newX, double newY, double newWidth, double newHeight) {
         super(newX, newY, newWidth, newHeight);
+        // keep track of the original top/left location
         initialX = newX;
         initialY = newY;
     }
@@ -25,7 +26,6 @@ public class XRectangle extends XShape {
      * @param newY new height location
      */
     public void resize(double newX, double newY) {
-        // keep track of initial top/left location
         x = initialX;
         y = initialY;
         width = newX - initialX;

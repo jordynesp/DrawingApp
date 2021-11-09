@@ -49,7 +49,7 @@ public class DrawingView extends StackPane implements ModelSubscriber {
         for (XShape shape : model.getShapes()) {
             gc.setFill(shape.getColourName());
             switch (shape.getShapeName()) {
-                case "Rect" -> {
+                case "Rect", "Square" -> {
                     gc.fillRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                     gc.strokeRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                 }
