@@ -13,6 +13,7 @@ public class InteractionModel {
     private Color selectedColour;
     private Shape selectedToolShape;
     private String selectedShapeName;
+    private XShape selectedShape;
 
     /**
      * Constructor for InteractionModel
@@ -78,4 +79,21 @@ public class InteractionModel {
     public String getSelectedShapeName() {
         return selectedShapeName;
     }
+
+    /**
+     * Set the currently selected shape
+     * @param newShape selected shape
+     */
+    public void setSelectedShape(XShape newShape) {
+        selectedShape = newShape;
+    }
+
+    /**
+     * Get the currently selected shape
+     * @return selected shape
+     */
+    public XShape getSelectedShape() {
+        return selectedShape;
+    }
+
 }

@@ -1,9 +1,7 @@
 package com.example.a3.views;
 
 import com.example.a3.controllers.DrawingController;
-import com.example.a3.models.DrawingModel;
-import com.example.a3.models.InteractionModel;
-import com.example.a3.models.ModelSubscriber;
+import com.example.a3.models.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
@@ -37,7 +35,6 @@ public class DrawingView extends StackPane implements ModelSubscriber {
             myCanvas.setHeight(newVal.doubleValue());
             draw();
         });
-        draw();
     }
 
     /**
@@ -49,9 +46,15 @@ public class DrawingView extends StackPane implements ModelSubscriber {
         gc.clearRect(0, 0, width, height);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2.0);
-        gc.setFill(iModel.getSelectedColour());
-        gc.fillOval(0, 0, width, height);
-
+        for (XShape shape : model.getShapes()) {
+            gc.setFill(shape.getColourName());
+            switch (shape.getShapeName()) {
+                case "Rect" -> {
+                    gc.fillRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
+                    gc.strokeRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
+                }
+            }
+        }
     }
 
     /**
@@ -75,8 +78,11 @@ public class DrawingView extends StackPane implements ModelSubscriber {
      * @param newController the controller
      */
     public void setController(DrawingController newController) {
-//        myCanvas.setOnMouseClicked(e -> newController.handlePressed(e.getX()/width,e.getY()/height,e));
-
+        double width = myCanvas.getWidth();
+        double height = myCanvas.getHeight();
+        myCanvas.setOnMousePressed(e -> newController.handlePressed(e.getX()/width,e.getY()/height,e));
+        myCanvas.setOnMouseReleased(e -> newController.handleReleased(e.getX()/width,e.getY()/height,e));
+        myCanvas.setOnMouseDragged(e -> newController.handleDragged(e.getX()/width,e.getY()/height,e));
     }
 
     /**
