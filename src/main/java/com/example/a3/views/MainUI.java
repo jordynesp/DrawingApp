@@ -4,7 +4,9 @@ import com.example.a3.controllers.DrawingController;
 import com.example.a3.models.DrawingModel;
 import com.example.a3.models.InteractionModel;
 import com.example.a3.models.ModelSubscriber;
+import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 /**
  * A view that contains and lays out the shape toolbar,
@@ -14,6 +16,7 @@ public class MainUI extends BorderPane implements ModelSubscriber {
     private ShapeToolbar shapeToolbar;
     private DrawingView drawingView;
     private ColourToolbar colourToolbar;
+    private MiniDrawingView miniDrawingView;
     private DrawingModel model;
     private InteractionModel iModel;
 
@@ -22,9 +25,14 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         shapeToolbar = new ShapeToolbar();
         drawingView = new DrawingView();
         colourToolbar = new ColourToolbar();
+        miniDrawingView = new MiniDrawingView();
+
+        StackPane drawingViews = new StackPane(drawingView, miniDrawingView);
+        StackPane.setAlignment(miniDrawingView, Pos.TOP_LEFT);
+
 
         this.setLeft(shapeToolbar);
-        this.setCenter(drawingView);
+        this.setCenter(drawingViews);
         this.setRight(colourToolbar);
 
         // make the canvas view resize based on the main application
@@ -47,9 +55,11 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         shapeToolbar.setModel(newModel);
         drawingView.setModel(newModel);
         colourToolbar.setModel(newModel);
+        miniDrawingView.setModel(newModel);
         model.addSub(shapeToolbar);
         model.addSub(colourToolbar);
         model.addSub(drawingView);
+        model.addSub(miniDrawingView);
     }
 
     /**
@@ -61,6 +71,7 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         shapeToolbar.setInteractionModel(newIModel);
         drawingView.setInteractionModel(newIModel);
         colourToolbar.setInteractionModel(newIModel);
+        miniDrawingView.setInteractionModel(newIModel);
         iModel.addSub(shapeToolbar);
         iModel.addSub(colourToolbar);
         iModel.addSub(drawingView);
@@ -74,6 +85,7 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         shapeToolbar.setController(newController);
         drawingView.setController(newController);
         colourToolbar.setController(newController);
+        miniDrawingView.setController(newController);
     }
 
     /**
