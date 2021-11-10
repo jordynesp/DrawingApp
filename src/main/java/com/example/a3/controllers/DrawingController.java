@@ -112,12 +112,10 @@ public class DrawingController {
                 else {
                     iModel.setSelectedShape(null);
                     currentState = State.READY;
-                    System.out.println("triggering this");
                 }
             }
         }
         System.out.println("Current state is: " + currentState);
-
     }
 
     /**
@@ -153,7 +151,6 @@ public class DrawingController {
             }
         }
         System.out.println("Current state is: " + currentState);
-
     }
 
 }

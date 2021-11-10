@@ -34,7 +34,9 @@ public class XCircle extends XSquare {
      */
     @Override
     public boolean contains(double mouseX, double mouseY) {
-        return false;
+        double centerX = x + (width/2);
+        double centerY = y + (width/2);
+        return (Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2)) <= Math.pow(width/2, 2);
     }
 
 }
