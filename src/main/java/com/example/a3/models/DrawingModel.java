@@ -112,4 +112,13 @@ public class DrawingModel {
         selectedShape.move(normX,normY);
         notifySubscribers();
     }
+
+    /**
+     * Delete the selected shape
+     * @param selectedShape shape to be deleted
+     */
+    public void deleteSelected(XShape selectedShape) {
+        shapes.remove(selectedShape);
+        notifySubscribers();
+    }
 }

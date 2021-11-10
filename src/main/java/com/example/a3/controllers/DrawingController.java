@@ -59,6 +59,17 @@ public class DrawingController {
     }
 
     /**
+     * Delete the selected shape if there is one
+     */
+    public void deleteSelected() {
+        if (currentState == State.SELECTED) {
+            model.deleteSelected(iModel.getSelectedShape());
+            iModel.setSelectedShape(null);
+            currentState = State.READY;
+        }
+    }
+
+    /**
      * Designate what the controller should do
      * based on state when a mouse is pressed
      * @param normX normalized x coordinate
@@ -80,6 +91,10 @@ public class DrawingController {
                     prevY = normY;
                     currentState = State.PREPARE_CREATE;
                 }
+            }
+            case SELECTED -> {
+                prevX = normX;
+                prevY = normY;
             }
         }
         System.out.println("Current state is: " + currentState);
@@ -110,8 +125,10 @@ public class DrawingController {
                     iModel.setSelectedShape(model.whichShape(normX, normY));
                 }
                 else {
-                    iModel.setSelectedShape(null);
-                    currentState = State.READY;
+                    if (prevX == normX && prevY == normY) {
+                        iModel.setSelectedShape(null);
+                        currentState = State.READY;
+                    }
                 }
             }
         }
