@@ -34,7 +34,15 @@ public class XOval extends XRectangle {
      */
     @Override
     public boolean contains(double mouseX, double mouseY) {
-        return false;
+        double xRadius = width/2;
+        double yRadius = height/2;
+        if (xRadius <= 0.0 || yRadius <= 0.0) {
+            return false;
+        }
+        double normX = mouseX - (x + width/2);
+        double normY = mouseY - (y + height/2);
+
+        return (normX*normX)/(xRadius*xRadius) + (normY*normY)/(yRadius*yRadius) <= 1.0;
     }
 
 }
