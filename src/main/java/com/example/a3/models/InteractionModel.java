@@ -65,14 +65,6 @@ public class InteractionModel {
     }
 
     /**
-     * Get the selected toolbar shape
-     * @return selected toolbar shape
-     */
-    public Shape getSelectedToolShape() {
-        return selectedToolShape;
-    }
-
-    /**
      * Get the selected toolbar shape name
      * @return selected toolbar shape name
      */
@@ -86,6 +78,7 @@ public class InteractionModel {
      */
     public void setSelectedShape(XShape newShape) {
         selectedShape = newShape;
+        notifySubscribers();
     }
 
     /**

@@ -76,4 +76,41 @@ public class DrawingModel {
         selectedShape.resize(normX, normY);
         notifySubscribers();
     }
+
+    /**
+     * Check if any shape was hit
+     * @param normX mouse X coordinate
+     * @param normY mouse Y coordinate
+     * @return true if clicked a shape, false otherwise
+     */
+    public boolean checkHit(double normX, double normY) {
+        return shapes.stream().anyMatch(s -> s.contains(normX,normY));
+    }
+
+    /**
+     * Determines which shape was selected
+     * @param normX mouse X coordinate
+     * @param normY mouse Y coordinate
+     * @return the hit shape
+     */
+    public XShape whichShape(double normX, double normY) {
+        XShape found = null;
+        for (XShape shape : shapes) {
+            if (shape.contains(normX,normY)) {
+                found = shape;
+            }
+        }
+        return found;
+    }
+
+    /**
+     * Move the selected shape
+     * @param selectedShape selected shape
+     * @param normX mouse X location
+     * @param normY mouse Y location
+     */
+    public void moveShape(XShape selectedShape, double normX, double normY) {
+        selectedShape.move(normX,normY);
+        notifySubscribers();
+    }
 }

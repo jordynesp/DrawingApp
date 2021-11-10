@@ -30,7 +30,6 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         StackPane drawingViews = new StackPane(drawingView, miniDrawingView);
         StackPane.setAlignment(miniDrawingView, Pos.TOP_LEFT);
 
-
         this.setLeft(shapeToolbar);
         this.setCenter(drawingViews);
         this.setRight(colourToolbar);
@@ -75,6 +74,7 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         iModel.addSub(shapeToolbar);
         iModel.addSub(colourToolbar);
         iModel.addSub(drawingView);
+        iModel.addSub(miniDrawingView);
     }
 
     /**

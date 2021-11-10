@@ -21,8 +21,21 @@ public class XLine extends XShape {
      * @param newX new x ending location
      * @param newY new y ending location
      */
+    @Override
     public void resize(double newX, double newY) {
         width = newX;
         height = newY;
     }
+
+    /**
+     * Determine if a point lies in this shape
+     * @param mouseX x coordinate
+     * @param mouseY y coordinate
+     * @return true if point is in shape, false otherwise
+     */
+    @Override
+    public boolean contains(double mouseX, double mouseY) {
+        return false;
+    }
+
 }

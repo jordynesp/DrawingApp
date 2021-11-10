@@ -32,6 +32,14 @@ public abstract class XShape {
     public abstract void resize(double newX, double newY);
 
     /**
+     * Determine if a point lies in this shape
+     * @param mouseX x coordinate
+     * @param mouseY y coordinate
+     * @return true if point is in shape, false otherwise
+     */
+    public abstract boolean contains(double mouseX, double mouseY);
+
+    /**
      * Set the colour of the shape
      * @param colour colour
      */
@@ -61,6 +69,16 @@ public abstract class XShape {
      */
     public String getShapeName() {
         return shapeName;
+    }
+
+    /**
+     * Move the shape
+     * @param normX new X location
+     * @param normY new Y location
+     */
+    public void move(double normX, double normY) {
+        x = normX-(width/2);
+        y = normY-(height/2);
     }
 
 

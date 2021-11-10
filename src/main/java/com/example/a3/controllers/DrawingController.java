@@ -15,7 +15,7 @@ public class DrawingController {
     double prevX, prevY;
 
     private enum State {
-        READY, PREPARE_CREATE, RESIZING
+        READY, PREPARE_CREATE, RESIZING, SELECTED, MOVING, PREPARE_RESIZE
     }
 
     private State currentState;
@@ -68,10 +68,18 @@ public class DrawingController {
     public void handlePressed(double normX, double normY, MouseEvent event) {
         switch (currentState) {
             case READY -> {
-                // get ready to create a shape
-                prevX = normX;
-                prevY = normY;
-                currentState = State.PREPARE_CREATE;
+                // check if on a shape
+                boolean hit = model.checkHit(normX, normY);
+                if (hit) {
+                    iModel.setSelectedShape(model.whichShape(normX, normY));
+                    currentState = State.SELECTED;
+                } else {
+                    // get ready to create shape
+                    iModel.setSelectedShape(null);
+                    prevX = normX;
+                    prevY = normY;
+                    currentState = State.PREPARE_CREATE;
+                }
             }
         }
     }
@@ -84,17 +92,17 @@ public class DrawingController {
      * @param event mouse event
      */
     public void handleReleased(double normX, double normY, MouseEvent event) {
-//        switch (currentState) {
-//            case PREPARE_CREATE -> {
-//                // cancel shape drawing
-//                currentState = State.READY;
-//            }
-//            case RESIZING -> {
-//                // finish drawing shape
-//                currentState = State.READY;
-//            }
-//        }
-        currentState = State.READY;
+        switch (currentState) {
+            case PREPARE_CREATE -> {
+                // cancel shape drawing
+                iModel.setSelectedShape(null);
+                currentState = State.READY;
+            }
+            case RESIZING, MOVING -> {
+                // finish manipulating shape;
+                currentState = State.SELECTED;
+            }
+        }
     }
 
     /**
@@ -115,6 +123,40 @@ public class DrawingController {
             case RESIZING -> {
                 // resize the currently selected shape
                 model.resizeShape(iModel.getSelectedShape(), normX, normY);
+            }
+            case SELECTED -> {
+                // get ready to move shape
+                boolean onShape = iModel.getSelectedShape().contains(normX, normY);
+                if (onShape) {
+                    currentState = State.MOVING;
+                }
+            }
+            case MOVING -> {
+                // move the shape
+                model.moveShape(iModel.getSelectedShape(), normX, normY);
+            }
+        }
+    }
+
+    /**
+     * Designate what the controller should do
+     * based on state when a mouse is clicked
+     * @param normX normalized x coordinate
+     * @param normY normalized y coordinate
+     * @param event mouse event
+     */
+    public void handleClicked(double normX, double normY, MouseEvent event) {
+        switch (currentState) {
+            case SELECTED -> {
+                // check if on a shape
+                boolean hit = model.checkHit(normX, normY);
+                if (hit) {
+                    iModel.setSelectedShape(model.whichShape(normX, normY));
+                }
+                else {
+                    iModel.setSelectedShape(null);
+                    currentState = State.READY;
+                }
             }
         }
     }
