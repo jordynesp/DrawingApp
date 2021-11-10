@@ -35,7 +35,42 @@ public class XLine extends XShape {
      */
     @Override
     public boolean contains(double mouseX, double mouseY) {
-        return false;
+        double length = calcDistance(x,y,width,height);
+        double ratioA = (y-height) / length;
+        double ratioB = (width-x) / length;
+        double ratioC = -1 * ((y-height) * x + (width-x) * y) / length;
+        double distanceFromLine = Math.abs(ratioA * mouseX + ratioB * mouseY + ratioC);
+
+        return distanceFromLine <= 0.008;
+    }
+
+    /**
+     * Move the shape
+     * @param normX new X location
+     * @param normY new Y location
+     */
+    @Override
+    public void move(double normX, double normY) {
+        double dX = normX - x;
+        double dY = normY - y;
+        x += dX;
+        y += dY;
+        width += dX;
+        height += dY;
+        initialX = x;
+        initialY = y;
+    }
+
+    /**
+     * Calculates the distance between two points
+     * @param x1 first X coordinate
+     * @param y1 first Y coordinate
+     * @param x2 second X coordinate
+     * @param y2 second Y coordinate
+     * @return the distance between two points
+     */
+    private double calcDistance(double x1, double y1, double x2, double y2) {
+        return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
     }
 
 }

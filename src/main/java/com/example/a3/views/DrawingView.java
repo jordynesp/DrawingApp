@@ -39,9 +39,15 @@ public class DrawingView extends StackPane implements ModelSubscriber {
             gc.setFill(shape.getColourName());
             if (shape.equals(iModel.getSelectedShape())) {
                 gc.setStroke(Color.RED);
+                if (shape.getShapeName().equals("Line")) {
+                    gc.setStroke(Color.RED);
+                }
             }
             else {
                 gc.setStroke(Color.BLACK);
+                if (shape.getShapeName().equals("Line")) {
+                    gc.setStroke(shape.getColourName());
+                }
             }
             switch (shape.getShapeName()) {
                 case "Rect", "Square" -> {
@@ -53,8 +59,7 @@ public class DrawingView extends StackPane implements ModelSubscriber {
                     gc.strokeOval(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                 }
                 case "Line" -> {
-                    gc.setStroke(shape.getColourName());
-                    gc.setLineWidth(3.0);
+                    gc.setLineWidth(4.0);
                     gc.strokeLine(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                     gc.setStroke(Color.BLACK);
                     gc.setLineWidth(2.0);

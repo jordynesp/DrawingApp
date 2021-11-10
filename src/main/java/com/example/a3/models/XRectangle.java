@@ -48,5 +48,4 @@ public class XRectangle extends XShape {
         return mouseX >= x && mouseX <= x+width && mouseY >= y && mouseY <= y+height;
     }
 
-
 }

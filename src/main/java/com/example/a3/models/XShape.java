@@ -81,8 +81,8 @@ public abstract class XShape {
     public void move(double normX, double normY) {
         x = normX-(width/2);
         y = normY-(height/2);
-        initialX = normX;
-        initialY = normY;
+        initialX = x;
+        initialY = y;
     }
 
 
