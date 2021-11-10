@@ -34,12 +34,14 @@ public class DrawingView extends StackPane implements ModelSubscriber {
         double width = myCanvas.getWidth();
         double height = myCanvas.getHeight();
         gc.clearRect(0, 0, width, height);
-        gc.setStroke(Color.BLACK);
         gc.setLineWidth(2.0);
         for (XShape shape : model.getShapes()) {
             gc.setFill(shape.getColourName());
             if (shape.equals(iModel.getSelectedShape())) {
                 gc.setStroke(Color.RED);
+            }
+            else {
+                gc.setStroke(Color.BLACK);
             }
             switch (shape.getShapeName()) {
                 case "Rect", "Square" -> {
@@ -97,7 +99,6 @@ public class DrawingView extends StackPane implements ModelSubscriber {
         myCanvas.setOnMousePressed(e -> newController.handlePressed(e.getX()/width,e.getY()/height,e));
         myCanvas.setOnMouseReleased(e -> newController.handleReleased(e.getX()/width,e.getY()/height,e));
         myCanvas.setOnMouseDragged(e -> newController.handleDragged(e.getX()/width,e.getY()/height,e));
-        myCanvas.setOnMouseClicked(e -> newController.handleClicked(e.getX()/width,e.getY()/height,e));
     }
 
     /**

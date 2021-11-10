@@ -4,7 +4,6 @@ package com.example.a3.models;
  * Class to represent a rectangle.
  */
 public class XRectangle extends XShape {
-    private double initialX, initialY;
 
     /**
      * Constructor for XRectangle
@@ -15,9 +14,6 @@ public class XRectangle extends XShape {
      */
     public XRectangle(double newX, double newY, double newWidth, double newHeight) {
         super(newX, newY, newWidth, newHeight);
-        // keep track of the original top/left location
-        initialX = newX;
-        initialY = newY;
     }
 
     /**

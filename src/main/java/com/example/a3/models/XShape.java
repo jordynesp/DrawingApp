@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 public abstract class XShape {
     private Color colourName;
     private String shapeName;
-    public double x, y, width, height;
+    public double x, y, width, height, initialX, initialY;
 
     /**
      * Constructor for XShape
@@ -22,6 +22,8 @@ public abstract class XShape {
         y = newY;
         width = newWidth;
         height = newHeight;
+        initialX = newX;
+        initialY = newY;
     }
 
     /**
@@ -79,6 +81,8 @@ public abstract class XShape {
     public void move(double normX, double normY) {
         x = normX-(width/2);
         y = normY-(height/2);
+        initialX = normX;
+        initialY = normY;
     }
 
 

@@ -76,7 +76,7 @@ public class XSquare extends XShape {
      */
     @Override
     public boolean contains(double mouseX, double mouseY) {
-        return false;
+        return mouseX >= x && mouseX <= x+width && mouseY >= y && mouseY <= y+height;
     }
 
 }

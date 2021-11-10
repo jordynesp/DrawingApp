@@ -62,7 +62,6 @@ public class DrawingModel {
         shape.setColourName(selectedColour);
         shape.setShapeName(selectedShapeName);
         shapes.add(shape);
-        notifySubscribers();
         return shape;
     }
 

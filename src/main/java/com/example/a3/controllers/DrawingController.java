@@ -82,6 +82,7 @@ public class DrawingController {
                 }
             }
         }
+        System.out.println("Current state is: " + currentState);
     }
 
     /**
@@ -102,7 +103,21 @@ public class DrawingController {
                 // finish manipulating shape;
                 currentState = State.SELECTED;
             }
+            case SELECTED -> {
+                // check if on a shape
+                boolean hit = model.checkHit(normX, normY);
+                if (hit) {
+                    iModel.setSelectedShape(model.whichShape(normX, normY));
+                }
+                else {
+                    iModel.setSelectedShape(null);
+                    currentState = State.READY;
+                    System.out.println("triggering this");
+                }
+            }
         }
+        System.out.println("Current state is: " + currentState);
+
     }
 
     /**
@@ -118,6 +133,7 @@ public class DrawingController {
                 // adjust the size of the shape being drawn
                 iModel.setSelectedShape(model.createShape(prevX, prevY, iModel.getSelectedShapeName(),
                         iModel.getSelectedColour()));
+                model.notifySubscribers();
                 currentState = State.RESIZING;
             }
             case RESIZING -> {
@@ -136,29 +152,8 @@ public class DrawingController {
                 model.moveShape(iModel.getSelectedShape(), normX, normY);
             }
         }
-    }
+        System.out.println("Current state is: " + currentState);
 
-    /**
-     * Designate what the controller should do
-     * based on state when a mouse is clicked
-     * @param normX normalized x coordinate
-     * @param normY normalized y coordinate
-     * @param event mouse event
-     */
-    public void handleClicked(double normX, double normY, MouseEvent event) {
-        switch (currentState) {
-            case SELECTED -> {
-                // check if on a shape
-                boolean hit = model.checkHit(normX, normY);
-                if (hit) {
-                    iModel.setSelectedShape(model.whichShape(normX, normY));
-                }
-                else {
-                    iModel.setSelectedShape(null);
-                    currentState = State.READY;
-                }
-            }
-        }
     }
 
 }
