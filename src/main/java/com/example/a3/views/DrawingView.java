@@ -16,6 +16,8 @@ public class DrawingView extends StackPane implements ModelSubscriber {
     protected GraphicsContext gc;
     private DrawingModel model;
     private InteractionModel iModel;
+    private double[] dashPattern;
+
 
     /**
      * Constructor for DrawingView
@@ -25,6 +27,7 @@ public class DrawingView extends StackPane implements ModelSubscriber {
         gc = myCanvas.getGraphicsContext2D();
         this.setStyle("-fx-background-color: lightgrey");
         this.getChildren().add(myCanvas);
+        dashPattern = new double[] {5, 5};
     }
 
     /**
@@ -35,20 +38,15 @@ public class DrawingView extends StackPane implements ModelSubscriber {
         double height = myCanvas.getHeight();
         gc.clearRect(0, 0, width, height);
         gc.setLineWidth(2.0);
+
         for (XShape shape : model.getShapes()) {
             gc.setFill(shape.getColourName());
-            if (shape.equals(iModel.getSelectedShape())) {
-                gc.setStroke(Color.RED);
-                if (shape.getShapeName().equals("Line")) {
-                    gc.setStroke(Color.RED);
-                }
+            gc.setStroke(Color.BLACK);
+            gc.setLineDashes(null);
+            if (shape.getShapeName().equals("Line")) {
+                gc.setStroke(shape.getColourName());
             }
-            else {
-                gc.setStroke(Color.BLACK);
-                if (shape.getShapeName().equals("Line")) {
-                    gc.setStroke(shape.getColourName());
-                }
-            }
+
             switch (shape.getShapeName()) {
                 case "Rect", "Square" -> {
                     gc.fillRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
@@ -63,6 +61,17 @@ public class DrawingView extends StackPane implements ModelSubscriber {
                     gc.strokeLine(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                     gc.setStroke(Color.BLACK);
                     gc.setLineWidth(2.0);
+                }
+            }
+            if (shape.equals(iModel.getSelectedShape())) {
+                gc.setStroke(Color.RED);
+                gc.setLineDashes(dashPattern);
+                if (shape.getShapeName().equals("Line")) {
+                    gc.setLineWidth(4.0);
+                    gc.strokeLine(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
+                }
+                else {
+                    gc.strokeRect(shape.x * width, shape.y * height, shape.width * width, shape.height * height);
                 }
             }
         }

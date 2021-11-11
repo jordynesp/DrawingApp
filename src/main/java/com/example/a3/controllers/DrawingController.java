@@ -157,8 +157,14 @@ public class DrawingController {
             }
             case SELECTED -> {
                 // get ready to move shape
-                boolean onShape = iModel.getSelectedShape().contains(normX, normY);
-                if (onShape) {
+                boolean onShapePrevXY = iModel.getSelectedShape().contains(prevX, prevY);
+                if (!onShapePrevXY) {
+                    iModel.setSelectedShape(null);
+                    currentState = State.READY;
+                    break;
+                }
+                boolean onShapeXY = iModel.getSelectedShape().contains(normX, normY);
+                if (onShapeXY) {
                     currentState = State.MOVING;
                 }
             }
