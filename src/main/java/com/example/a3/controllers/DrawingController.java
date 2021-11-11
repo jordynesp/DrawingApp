@@ -120,14 +120,15 @@ public class DrawingController {
             }
             case SELECTED -> {
                 // check if on a shape
-                boolean hit = model.checkHit(normX, normY);
-                if (hit) {
-                    iModel.setSelectedShape(model.whichShape(normX, normY));
-                }
-                else {
-                    if (prevX == normX && prevY == normY) {
-                        iModel.setSelectedShape(null);
-                        currentState = State.READY;
+                if (prevX == normX && prevY == normY) {
+                    boolean hit = model.checkHit(normX, normY);
+                    if (hit) {
+                        iModel.setSelectedShape(model.whichShape(normX, normY));
+                    } else {
+                        if (prevX == normX && prevY == normY) {
+                            iModel.setSelectedShape(null);
+                            currentState = State.READY;
+                        }
                     }
                 }
             }
@@ -159,8 +160,10 @@ public class DrawingController {
                 // get ready to move shape
                 boolean onShapePrevXY = iModel.getSelectedShape().contains(prevX, prevY);
                 if (!onShapePrevXY) {
-                    iModel.setSelectedShape(null);
-                    currentState = State.READY;
+                    if (prevX == normX && prevY == normY) {
+                        iModel.setSelectedShape(null);
+                        currentState = State.READY;
+                    }
                     break;
                 }
                 boolean onShapeXY = iModel.getSelectedShape().contains(normX, normY);

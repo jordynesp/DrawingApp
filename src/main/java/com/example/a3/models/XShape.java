@@ -9,6 +9,7 @@ public abstract class XShape {
     private Color colourName;
     private String shapeName;
     public double x, y, width, height, initialX, initialY;
+    public ResizeHandle handle;
 
     /**
      * Constructor for XShape
@@ -24,6 +25,9 @@ public abstract class XShape {
         height = newHeight;
         initialX = newX;
         initialY = newY;
+        double handleX = x + width;
+        double handleY = y + height;
+        handle = new ResizeHandle(handleX, handleY);
     }
 
     /**
@@ -83,6 +87,7 @@ public abstract class XShape {
         y = normY-(height/2);
         initialX = x;
         initialY = y;
+        handle.moveHandle(x, y, width, height);
     }
 
 

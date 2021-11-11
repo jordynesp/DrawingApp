@@ -14,6 +14,7 @@ public class XLine extends XShape {
      */
     public XLine(double newX1, double newY1, double newX2, double newY2) {
         super(newX1, newY1, newX2, newY2);
+        handle.moveHandle(newX2, newY2, 0.0, 0.0);
     }
 
     /**
@@ -25,6 +26,7 @@ public class XLine extends XShape {
     public void resize(double newX, double newY) {
         width = newX;
         height = newY;
+        handle.moveHandle(width, height, 0, 0);
     }
 
     /**
@@ -59,6 +61,7 @@ public class XLine extends XShape {
         height += dY;
         initialX = x;
         initialY = y;
+        handle.moveHandle(width, height, 0.0, 0.0);
     }
 
     /**

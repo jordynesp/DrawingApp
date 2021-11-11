@@ -35,6 +35,7 @@ public class XRectangle extends XShape {
             y = newY;
             height = initialY - newY;
         }
+        handle.moveHandle(x, y, width, height);
     }
 
     /**

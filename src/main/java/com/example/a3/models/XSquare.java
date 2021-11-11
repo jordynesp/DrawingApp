@@ -66,6 +66,7 @@ public class XSquare extends XShape {
                 width = height;
             }
         }
+        handle.moveHandle(x, y, width, height);
     }
 
     /**

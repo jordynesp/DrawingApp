@@ -71,8 +71,16 @@ public class DrawingView extends StackPane implements ModelSubscriber {
                     gc.strokeLine(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
                 }
                 else {
-                    gc.strokeRect(shape.x * width, shape.y * height, shape.width * width, shape.height * height);
+                    gc.strokeRect(shape.x * width, shape.y * height,
+                            shape.width * width, shape.height * height);
                 }
+                gc.setStroke(Color.BLACK);
+                gc.setLineDashes(null);
+                gc.strokeOval(shape.handle.x*width, shape.handle.y*height,
+                        shape.handle.diameter*width, shape.handle.diameter*height);
+                gc.setFill(Color.YELLOW);
+                gc.fillOval(shape.handle.x*width, shape.handle.y*height,
+                        shape.handle.diameter*width, shape.handle.diameter*height);
             }
         }
     }
