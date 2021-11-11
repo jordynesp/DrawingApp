@@ -14,9 +14,9 @@ import javafx.scene.paint.Color;
 public class DrawingView extends StackPane implements ModelSubscriber {
     protected Canvas myCanvas;
     protected GraphicsContext gc;
-    private DrawingModel model;
-    private InteractionModel iModel;
-    private double[] dashPattern;
+    protected DrawingModel model;
+    protected InteractionModel iModel;
+    private final double[] dashPattern;
 
 
     /**
