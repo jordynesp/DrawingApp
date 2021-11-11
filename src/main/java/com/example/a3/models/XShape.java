@@ -10,6 +10,7 @@ public abstract class XShape {
     private String shapeName;
     public double x, y, width, height, initialX, initialY;
     public ResizeHandle handle;
+    private int z;
 
     /**
      * Constructor for XShape
@@ -90,13 +91,20 @@ public abstract class XShape {
         handle.moveHandle(x, y, width, height);
     }
 
-
-    /*
-    - will need to implement collision detection for each shape
-    - might need to have an abstract contains method like:
-       public abstract boolean contains(double x, double y);
-    - implement movement, resizing
-    - drawing itself happens within the few
+    /**
+     * Set the z value of the shape
+     * @param newZ the z value
      */
+    public void setZ(int newZ) {
+        z = newZ;
+    }
+
+    /**
+     * Get the z value of the shape
+     * @return the z value
+     */
+    public int getZ() {
+        return z;
+    }
 
 }

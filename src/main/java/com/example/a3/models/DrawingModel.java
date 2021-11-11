@@ -1,8 +1,8 @@
 package com.example.a3.models;
 
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * The model that stores all elements of the drawing.
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class DrawingModel {
     private ArrayList<ModelSubscriber> subs;
     private ArrayList<XShape> shapes;
+    private int nextZ;
 
     /**
      * Constructor for DrawingModel
@@ -17,6 +18,7 @@ public class DrawingModel {
     public DrawingModel() {
         subs = new ArrayList<>();
         shapes = new ArrayList<>();
+        nextZ = 0;
     }
 
     /**
@@ -61,6 +63,7 @@ public class DrawingModel {
         }
         shape.setColourName(selectedColour);
         shape.setShapeName(selectedShapeName);
+        setZOrdering(shape);
         shapes.add(shape);
         return shape;
     }
@@ -119,6 +122,17 @@ public class DrawingModel {
      */
     public void deleteSelected(XShape selectedShape) {
         shapes.remove(selectedShape);
+        notifySubscribers();
+    }
+
+    /**
+     * Set the Z value of a shape
+     * @param shape the shape who's Z value needs to be set
+     */
+    public void setZOrdering(XShape shape) {
+        shape.setZ(nextZ);
+        nextZ++;
+        shapes.sort(Comparator.comparingInt(XShape::getZ));
         notifySubscribers();
     }
 }

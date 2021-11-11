@@ -83,6 +83,7 @@ public class DrawingController {
                 boolean hit = model.checkHit(normX, normY);
                 if (hit) {
                     iModel.setSelectedShape(model.whichShape(normX, normY));
+                    model.setZOrdering(iModel.getSelectedShape());
                     currentState = State.SELECTED;
                 } else {
                     // get ready to create shape
@@ -128,6 +129,7 @@ public class DrawingController {
                     boolean hit = model.checkHit(normX, normY);
                     if (hit) {
                         iModel.setSelectedShape(model.whichShape(normX, normY));
+                        model.setZOrdering(iModel.getSelectedShape());
                     } else {
                         if (prevX == normX && prevY == normY) {
                             iModel.setSelectedShape(null);
@@ -152,6 +154,7 @@ public class DrawingController {
                 // adjust the size of the shape being drawn
                 iModel.setSelectedShape(model.createShape(prevX, prevY, iModel.getSelectedShapeName(),
                         iModel.getSelectedColour()));
+                model.setZOrdering(iModel.getSelectedShape());
                 model.notifySubscribers();
                 currentState = State.RESIZING;
             }
@@ -160,7 +163,6 @@ public class DrawingController {
                 model.resizeShape(iModel.getSelectedShape(), normX, normY);
             }
             case SELECTED -> {
-                // get ready to move shape
                 boolean onShapePrevXY = iModel.getSelectedShape().contains(prevX, prevY);
                 if (!onShapePrevXY) {
                     if (prevX == normX && prevY == normY) {
@@ -171,6 +173,7 @@ public class DrawingController {
                 }
                 boolean onShapeXY = iModel.getSelectedShape().contains(normX, normY);
                 if (onShapeXY) {
+                    // get ready to move shape
                     currentState = State.MOVING;
                 }
             }
