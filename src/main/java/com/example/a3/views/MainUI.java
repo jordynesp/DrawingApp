@@ -23,9 +23,9 @@ public class MainUI extends BorderPane implements ModelSubscriber {
     public MainUI() {
         // create the toolbar and canvas views to store
         shapeToolbar = new ShapeToolbar();
-        drawingView = new DrawingView();
+        drawingView = new DrawingView(2000, 2000);
         colourToolbar = new ColourToolbar();
-        miniDrawingView = new MiniDrawingView();
+        miniDrawingView = new MiniDrawingView(2000, 2000);
 
         StackPane drawingViews = new StackPane(drawingView, miniDrawingView);
         StackPane.setAlignment(miniDrawingView, Pos.TOP_LEFT);

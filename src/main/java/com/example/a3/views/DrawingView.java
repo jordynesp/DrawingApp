@@ -17,25 +17,27 @@ public class DrawingView extends StackPane implements ModelSubscriber {
     protected DrawingModel model;
     protected InteractionModel iModel;
     private final double[] dashPattern;
-
+    protected double docWidth, docHeight;
 
     /**
      * Constructor for DrawingView
      */
-    public DrawingView() {
+    public DrawingView(double newDocWidth, double newDocHeight) {
         myCanvas = new Canvas(500,500);
         gc = myCanvas.getGraphicsContext2D();
         this.setStyle("-fx-background-color: lightgrey");
         this.getChildren().add(myCanvas);
         dashPattern = new double[] {5, 5};
+        docWidth = newDocWidth;
+        docHeight = newDocHeight;
     }
 
     /**
      * Draws the shapes onto the canvas in immediate-mode graphics
      */
     public void draw() {
-        double width = myCanvas.getWidth();
-        double height = myCanvas.getHeight();
+        double width = docWidth;
+        double height = docHeight;
         gc.clearRect(0, 0, width, height);
         gc.setLineWidth(2.0);
 
@@ -116,8 +118,8 @@ public class DrawingView extends StackPane implements ModelSubscriber {
             draw();
         });
         // event handlers for interaction on canvas
-        double width = myCanvas.getWidth();
-        double height = myCanvas.getHeight();
+        double width = docWidth;
+        double height = docHeight;
         myCanvas.setOnMousePressed(e -> newController.handlePressed(e.getX()/width,e.getY()/height,e));
         myCanvas.setOnMouseReleased(e -> newController.handleReleased(e.getX()/width,e.getY()/height,e));
         myCanvas.setOnMouseDragged(e -> newController.handleDragged(e.getX()/width,e.getY()/height,e));
