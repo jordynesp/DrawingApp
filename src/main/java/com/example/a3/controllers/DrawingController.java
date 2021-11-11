@@ -77,6 +77,8 @@ public class DrawingController {
      * @param event mouse event
      */
     public void handlePressed(double normX, double normY, MouseEvent event) {
+        prevX = normX;
+        prevY = normY;
         switch (currentState) {
             case READY -> {
                 // check if on a shape
@@ -94,12 +96,21 @@ public class DrawingController {
                 }
             }
             case SELECTED -> {
-                prevX = normX;
-                prevY = normY;
                 // if the handle was pressed, get ready to resize
                 boolean handleHit = iModel.getSelectedShape().handle.onHandle(normX, normY);
                 if (handleHit) {
                     currentState = State.RESIZING;
+                } else {
+                    boolean onThisShape = iModel.getSelectedShape().contains(normX, normY);
+                    if (onThisShape) {
+                        currentState = State.MOVING;
+                    } else {
+                        boolean onAnotherShape = model.checkHit(normX, normY);
+                        if (onAnotherShape) {
+                            iModel.setSelectedShape(model.whichShape(normX, normY));
+                            model.setZOrdering(iModel.getSelectedShape());
+                        }
+                    }
                 }
             }
         }
@@ -163,18 +174,16 @@ public class DrawingController {
                 model.resizeShape(iModel.getSelectedShape(), normX, normY);
             }
             case SELECTED -> {
-                boolean onShapePrevXY = iModel.getSelectedShape().contains(prevX, prevY);
-                if (!onShapePrevXY) {
-                    if (prevX == normX && prevY == normY) {
-                        iModel.setSelectedShape(null);
-                        currentState = State.READY;
-                    }
+                boolean onShapeXY = iModel.getSelectedShape().contains(normX, normY);
+                if (!onShapeXY) {
                     break;
                 }
-                boolean onShapeXY = iModel.getSelectedShape().contains(normX, normY);
-                if (onShapeXY) {
-                    // get ready to move shape
-                    currentState = State.MOVING;
+                else {
+                    boolean onShapePrevXY = iModel.getSelectedShape().contains(prevX, prevY);
+                    if (onShapePrevXY) {
+                        // get ready to move shape
+                        currentState = State.MOVING;
+                    }
                 }
             }
             case MOVING -> {

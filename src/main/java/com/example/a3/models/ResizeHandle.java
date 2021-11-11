@@ -14,7 +14,7 @@ public class ResizeHandle {
     public ResizeHandle(double newCenterX, double newCenterY) {
         centerX = newCenterX;
         centerY = newCenterY;
-        diameter = 0.02;
+        diameter = 0.025;
         x = centerX - diameter/2;
         y = centerY - diameter/2;
     }
