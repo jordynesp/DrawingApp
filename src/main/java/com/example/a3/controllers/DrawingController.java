@@ -15,7 +15,7 @@ public class DrawingController {
     double prevX, prevY;
 
     private enum State {
-        READY, PREPARE_CREATE, RESIZING, SELECTED, MOVING, PREPARE_RESIZE
+        READY, PREPARE_CREATE, RESIZING, SELECTED, MOVING
     }
 
     private State currentState;
@@ -95,9 +95,13 @@ public class DrawingController {
             case SELECTED -> {
                 prevX = normX;
                 prevY = normY;
+                // if the handle was pressed, get ready to resize
+                boolean handleHit = iModel.getSelectedShape().handle.onHandle(normX, normY);
+                if (handleHit) {
+                    currentState = State.RESIZING;
+                }
             }
         }
-        System.out.println("Current state is: " + currentState);
     }
 
     /**
@@ -133,7 +137,6 @@ public class DrawingController {
                 }
             }
         }
-        System.out.println("Current state is: " + currentState);
     }
 
     /**
@@ -176,7 +179,5 @@ public class DrawingController {
                 model.moveShape(iModel.getSelectedShape(), normX, normY);
             }
         }
-        System.out.println("Current state is: " + currentState);
     }
-
 }
