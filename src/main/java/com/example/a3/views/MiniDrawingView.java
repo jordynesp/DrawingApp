@@ -1,8 +1,6 @@
 package com.example.a3.views;
 
 import com.example.a3.controllers.DrawingController;
-import com.example.a3.models.DrawingModel;
-import com.example.a3.models.InteractionModel;
 import com.example.a3.models.ModelSubscriber;
 import com.example.a3.models.XShape;
 import javafx.scene.paint.Color;
@@ -27,6 +25,7 @@ public class MiniDrawingView extends DrawingView implements ModelSubscriber {
     /**
      * Draws the shapes onto the canvas in immediate-mode graphics
      */
+    @Override
     public void draw() {
         double width = myCanvas.getWidth();
         double height = myCanvas.getHeight();
@@ -74,22 +73,23 @@ public class MiniDrawingView extends DrawingView implements ModelSubscriber {
      * Associate a model to the view
      * @param newModel the drawing model information
      */
-    public void setModel(DrawingModel newModel) {
-        super.setModel(newModel);
-    }
+//    public void setModel(DrawingModel newModel) {
+//        super.setModel(newModel);
+//    }
+
+//    /**
+//     * Associate an interaction model to the view
+//     * @param newIModel interaction model
+//     */
+//    public void setInteractionModel(InteractionModel newIModel) {
+//        super.setInteractionModel(newIModel);
+//    }
 
     /**
-     * Associate an interaction model to the view
-     * @param newIModel interaction model
+     * Set a controller for the mini view
+     * @param newController the mini controller
      */
-    public void setInteractionModel(InteractionModel newIModel) {
-        super.setInteractionModel(newIModel);
-    }
-
-    /**
-     * Set a controller for the view
-     * @param newController the controller
-     */
+    @Override
     public void setController(DrawingController newController) {
         // re-draw canvas when application is resized
         myCanvas.widthProperty().addListener((observable, oldVal, newVal) -> {

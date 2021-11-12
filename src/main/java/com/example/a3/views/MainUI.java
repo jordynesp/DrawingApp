@@ -1,6 +1,7 @@
 package com.example.a3.views;
 
 import com.example.a3.controllers.DrawingController;
+import com.example.a3.controllers.MiniDrawingController;
 import com.example.a3.models.DrawingModel;
 import com.example.a3.models.InteractionModel;
 import com.example.a3.models.ModelSubscriber;
@@ -85,7 +86,15 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         shapeToolbar.setController(newController);
         drawingView.setController(newController);
         colourToolbar.setController(newController);
-        miniDrawingView.setController(newController);
+//        miniDrawingView.setController(newController);
+    }
+
+    /**
+     * Set a controller for the mini view
+     * @param newMiniController the mini view controller
+     */
+    public void setMiniController(MiniDrawingController newMiniController) {
+        miniDrawingView.setController(newMiniController);
     }
 
     /**

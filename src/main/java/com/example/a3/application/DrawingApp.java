@@ -1,14 +1,13 @@
 package com.example.a3.application;
 
 import com.example.a3.controllers.DrawingController;
+import com.example.a3.controllers.MiniDrawingController;
 import com.example.a3.models.DrawingModel;
 import com.example.a3.models.InteractionModel;
 import com.example.a3.views.MainUI;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -24,12 +23,16 @@ public class DrawingApp extends Application {
         MainUI mainUI = new MainUI();
         // Controller(s)
         DrawingController controller = new DrawingController();
+        MiniDrawingController miniController = new MiniDrawingController();
         // Set up MVC
         mainUI.setModel(model);
         mainUI.setInteractionModel(iModel);
         mainUI.setController(controller);
+        mainUI.setMiniController(miniController);
         controller.setModel(model);
         controller.setInteractionModel(iModel);
+        miniController.setModel(model);
+        miniController.setInteractionModel(iModel);
         model.addSub(mainUI);
         iModel.addSub(mainUI);
 
