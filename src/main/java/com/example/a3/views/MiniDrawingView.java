@@ -70,22 +70,6 @@ public class MiniDrawingView extends DrawingView implements ModelSubscriber {
     }
 
     /**
-     * Associate a model to the view
-     * @param newModel the drawing model information
-     */
-//    public void setModel(DrawingModel newModel) {
-//        super.setModel(newModel);
-//    }
-
-//    /**
-//     * Associate an interaction model to the view
-//     * @param newIModel interaction model
-//     */
-//    public void setInteractionModel(InteractionModel newIModel) {
-//        super.setInteractionModel(newIModel);
-//    }
-
-    /**
      * Set a controller for the mini view
      * @param newController the mini controller
      */

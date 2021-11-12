@@ -86,7 +86,6 @@ public class MainUI extends BorderPane implements ModelSubscriber {
         shapeToolbar.setController(newController);
         drawingView.setController(newController);
         colourToolbar.setController(newController);
-//        miniDrawingView.setController(newController);
     }
 
     /**
