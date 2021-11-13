@@ -135,4 +135,16 @@ public class DrawingModel {
         shapes.sort(Comparator.comparingInt(XShape::getZ));
         notifySubscribers();
     }
+
+    /**
+     * Move the viewport on the mini view
+     * @param viewPort the viewport
+     * @param normX x location of viewport
+     * @param normY y location of viewport
+     */
+    public void moveViewPort(ViewPort viewPort, double normX, double normY) {
+        viewPort.move(normX, normY);
+        notifySubscribers();
+    }
+
 }

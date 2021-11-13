@@ -3,7 +3,6 @@ package com.example.a3.views;
 import com.example.a3.controllers.MiniDrawingController;
 import com.example.a3.models.ModelSubscriber;
 import com.example.a3.models.XShape;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**

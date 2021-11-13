@@ -38,6 +38,8 @@ public class DrawingView extends StackPane implements ModelSubscriber {
     public void draw() {
         double width = docWidth;
         double height = docHeight;
+        double xOffset = iModel.viewPort.x * width;
+        double yOffset = iModel.viewPort.y * height;
         gc.clearRect(0, 0, width, height);
         gc.setLineWidth(2.0);
 
@@ -51,16 +53,21 @@ public class DrawingView extends StackPane implements ModelSubscriber {
 
             switch (shape.getShapeName()) {
                 case "Rect", "Square" -> {
-                    gc.fillRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
-                    gc.strokeRect(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
+                    gc.fillRect(shape.x*width-xOffset, shape.y*height-yOffset,
+                            shape.width*width, shape.height*height);
+                    gc.strokeRect(shape.x*width-xOffset, shape.y*height-yOffset,
+                            shape.width*width, shape.height*height);
                 }
                 case "Circle", "Oval" -> {
-                    gc.fillOval(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
-                    gc.strokeOval(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
+                    gc.fillOval(shape.x*width-xOffset, shape.y*height-yOffset,
+                            shape.width*width, shape.height*height);
+                    gc.strokeOval(shape.x*width-xOffset, shape.y*height-yOffset,
+                            shape.width*width, shape.height*height);
                 }
                 case "Line" -> {
                     gc.setLineWidth(4.0);
-                    gc.strokeLine(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
+                    gc.strokeLine(shape.x*width-xOffset, shape.y*height-yOffset,
+                            shape.width*width-xOffset, shape.height*height-yOffset);
                     gc.setStroke(Color.BLACK);
                     gc.setLineWidth(2.0);
                 }
@@ -70,18 +77,19 @@ public class DrawingView extends StackPane implements ModelSubscriber {
                 gc.setLineDashes(dashPattern);
                 if (shape.getShapeName().equals("Line")) {
                     gc.setLineWidth(4.0);
-                    gc.strokeLine(shape.x*width, shape.y*height, shape.width*width, shape.height*height);
+                    gc.strokeLine(shape.x*width-xOffset, shape.y*height-yOffset,
+                            shape.width*width-xOffset, shape.height*height-yOffset);
                 }
                 else {
-                    gc.strokeRect(shape.x * width, shape.y * height,
-                            shape.width * width, shape.height * height);
+                    gc.strokeRect(shape.x*width-xOffset, shape.y*height-yOffset,
+                            shape.width*width, shape.height*height);
                 }
                 gc.setStroke(Color.BLACK);
                 gc.setLineDashes(null);
-                gc.strokeOval(shape.handle.x*width, shape.handle.y*height,
+                gc.strokeOval(shape.handle.x*width-xOffset, shape.handle.y*height-yOffset,
                         shape.handle.diameter*width, shape.handle.diameter*height);
                 gc.setFill(Color.YELLOW);
-                gc.fillOval(shape.handle.x*width, shape.handle.y*height,
+                gc.fillOval(shape.handle.x*width-xOffset, shape.handle.y*height-yOffset,
                         shape.handle.diameter*width, shape.handle.diameter*height);
             }
         }
@@ -120,9 +128,21 @@ public class DrawingView extends StackPane implements ModelSubscriber {
         // event handlers for interaction on canvas
         double width = docWidth;
         double height = docHeight;
-        myCanvas.setOnMousePressed(e -> newController.handlePressed(e.getX()/width,e.getY()/height,e));
-        myCanvas.setOnMouseReleased(e -> newController.handleReleased(e.getX()/width,e.getY()/height,e));
-        myCanvas.setOnMouseDragged(e -> newController.handleDragged(e.getX()/width,e.getY()/height,e));
+        myCanvas.setOnMousePressed(e -> {
+            double xOffset = iModel.viewPort.x * width;
+            double yOffset = iModel.viewPort.y * width;
+            newController.handlePressed((e.getX()+xOffset)/width, (e.getY()+yOffset)/height, e);
+        });
+        myCanvas.setOnMouseReleased(e -> {
+            double xOffset = iModel.viewPort.x * width;
+            double yOffset = iModel.viewPort.y * width;
+            newController.handleReleased((e.getX()+xOffset)/width, (e.getY()+yOffset)/height, e);
+        });
+        myCanvas.setOnMouseDragged(e -> {
+            double xOffset = iModel.viewPort.x * width;
+            double yOffset = iModel.viewPort.y * width;
+            newController.handleDragged((e.getX()+xOffset)/width, (e.getY()+yOffset)/height, e);
+        });
     }
 
     /**

@@ -22,6 +22,8 @@ public class MiniDrawingController extends DrawingController {
      * @param event mouse event
      */
     public void handlePressed(double normX, double normY, MouseEvent event) {
+        prevX = normX;
+        prevY = normY;
         if (!iModel.viewPort.contains(normX, normY)) {
             super.handlePressed(normX, normY, event);
         }
@@ -46,8 +48,8 @@ public class MiniDrawingController extends DrawingController {
      * @param event mouse event
      */
     public void handleDragged(double normX, double normY, MouseEvent event) {
-        if (iModel.viewPort.contains(normX, normY)) {
-            model.moveShape(iModel.viewPort, normX, normY);
+        if (iModel.viewPort.contains(normX, normY) && currentState != State.MOVING && currentState != State.RESIZING) {
+            model.moveViewPort(iModel.viewPort, normX, normY);
         }
         else {
             super.handleDragged(normX, normY, event);
