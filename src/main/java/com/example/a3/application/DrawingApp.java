@@ -27,12 +27,12 @@ public class DrawingApp extends Application {
         // Set up MVC
         mainUI.setModel(model);
         mainUI.setInteractionModel(iModel);
-        mainUI.setController(controller);
-        mainUI.setMiniController(miniController);
         controller.setModel(model);
         controller.setInteractionModel(iModel);
         miniController.setModel(model);
         miniController.setInteractionModel(iModel);
+        mainUI.setController(controller);
+        mainUI.setMiniController(miniController);
         model.addSub(mainUI);
         iModel.addSub(mainUI);
 

@@ -1,6 +1,6 @@
 package com.example.a3.views;
 
-import com.example.a3.controllers.DrawingController;
+import com.example.a3.controllers.MiniDrawingController;
 import com.example.a3.models.ModelSubscriber;
 import com.example.a3.models.XShape;
 import javafx.scene.paint.Color;
@@ -73,8 +73,7 @@ public class MiniDrawingView extends DrawingView implements ModelSubscriber {
      * Set a controller for the mini view
      * @param newController the mini controller
      */
-    @Override
-    public void setController(DrawingController newController) {
+    public void setController(MiniDrawingController newController) {
         // re-draw canvas when application is resized
         myCanvas.widthProperty().addListener((observable, oldVal, newVal) -> {
             myCanvas.setWidth(newVal.doubleValue());

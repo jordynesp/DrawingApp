@@ -18,8 +18,8 @@ import java.util.HashMap;
 public class ShapeToolbar extends StackPane implements ModelSubscriber {
     private DrawingModel model;
     private InteractionModel iModel;
-    private HashMap<ToggleButton, ShapeButtonView> buttonShapes;
-    private ToggleGroup toggles;
+    private final HashMap<ToggleButton, ShapeButtonView> buttonShapes;
+    private final ToggleGroup toggles;
 
     /**
      * Constructor for ShapeToolbar class
@@ -100,8 +100,7 @@ public class ShapeToolbar extends StackPane implements ModelSubscriber {
         // initialize iModel selection
         for (ToggleButton button : buttonShapes.keySet()) {
             if (buttonShapes.get(button).getShapeName().equals("Rect")) {
-                iModel.setSelectedToolShape(buttonShapes.get(button).getButtonShape(),
-                        buttonShapes.get(button).getShapeName());
+                iModel.setSelectedToolShape(buttonShapes.get(button).getShapeName());
             }
         }
     }
@@ -114,8 +113,7 @@ public class ShapeToolbar extends StackPane implements ModelSubscriber {
         // set the border of the selected button
         for (ToggleButton button : buttonShapes.keySet()) {
             button.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                newController.handleSelectedToolShape(buttonShapes.get(button).getButtonShape(),
-                        buttonShapes.get(button).getShapeName());
+                newController.handleSelectedToolShape(buttonShapes.get(button).getShapeName());
             });
         }
     }
@@ -139,6 +137,5 @@ public class ShapeToolbar extends StackPane implements ModelSubscriber {
         selection.setFill(iModel.getSelectedColour());
         selection.setStroke(iModel.getSelectedColour());
     }
-
 
 }

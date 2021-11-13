@@ -52,10 +52,10 @@ public class DrawingController {
 
     /**
      * Set the selected shape in the toolbar
-     * @param shape selected shape
+     * @param name selected shape's name
      */
-    public void handleSelectedToolShape(Shape shape, String name) {
-        iModel.setSelectedToolShape(shape, name);
+    public void handleSelectedToolShape(String name) {
+        iModel.setSelectedToolShape(name);
     }
 
     /**
@@ -97,20 +97,25 @@ public class DrawingController {
             }
             case SELECTED -> {
                 // if the handle was pressed, get ready to resize
-                boolean handleHit = iModel.getSelectedShape().handle.onHandle(normX, normY);
-                if (handleHit) {
-                    currentState = State.RESIZING;
-                } else {
-                    boolean onThisShape = iModel.getSelectedShape().contains(normX, normY);
-                    if (onThisShape) {
-                        currentState = State.MOVING;
+                if (iModel.getSelectedShape() != null) {
+                    boolean handleHit = iModel.getSelectedShape().handle.onHandle(normX, normY);
+                    if (handleHit) {
+                        currentState = State.RESIZING;
                     } else {
-                        boolean onAnotherShape = model.checkHit(normX, normY);
-                        if (onAnotherShape) {
-                            iModel.setSelectedShape(model.whichShape(normX, normY));
-                            model.setZOrdering(iModel.getSelectedShape());
+                        boolean onThisShape = iModel.getSelectedShape().contains(normX, normY);
+                        if (onThisShape) {
+                            currentState = State.MOVING;
+                        } else {
+                            boolean onAnotherShape = model.checkHit(normX, normY);
+                            if (onAnotherShape) {
+                                iModel.setSelectedShape(model.whichShape(normX, normY));
+                                model.setZOrdering(iModel.getSelectedShape());
+                            }
                         }
                     }
+                }
+                else {
+                    currentState = State.READY;
                 }
             }
         }
@@ -174,16 +179,18 @@ public class DrawingController {
                 model.resizeShape(iModel.getSelectedShape(), normX, normY);
             }
             case SELECTED -> {
-                boolean onShapeXY = iModel.getSelectedShape().contains(normX, normY);
-                if (!onShapeXY) {
-                    break;
+                if (iModel.getSelectedShape() != null) {
+                    boolean onShapeXY = iModel.getSelectedShape().contains(normX, normY);
+                    if (onShapeXY) {
+                        boolean onShapePrevXY = iModel.getSelectedShape().contains(prevX, prevY);
+                        if (onShapePrevXY) {
+                            // get ready to move shape
+                            currentState = State.MOVING;
+                        }
+                    }
                 }
                 else {
-                    boolean onShapePrevXY = iModel.getSelectedShape().contains(prevX, prevY);
-                    if (onShapePrevXY) {
-                        // get ready to move shape
-                        currentState = State.MOVING;
-                    }
+                    currentState = State.READY;
                 }
             }
             case MOVING -> {

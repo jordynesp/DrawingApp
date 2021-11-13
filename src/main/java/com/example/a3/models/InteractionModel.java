@@ -9,17 +9,19 @@ import java.util.ArrayList;
  * The interaction model that stores all elements related to view state.
  */
 public class InteractionModel {
-    private ArrayList<ModelSubscriber> subs;
+    private final ArrayList<ModelSubscriber> subs;
     private Color selectedColour;
-    private Shape selectedToolShape;
     private String selectedShapeName;
     private XShape selectedShape;
+    private double viewLeft, viewTop;
 
     /**
      * Constructor for InteractionModel
      */
     public InteractionModel() {
         subs = new ArrayList<>();
+        viewLeft = 0;
+        viewTop = 0;
     }
 
     /**
@@ -56,10 +58,9 @@ public class InteractionModel {
 
     /**
      * Set the selected toolbar shape
-     * @param shape selected toolbar shape
+     * @param name selected toolbar shape name
      */
-    public void setSelectedToolShape(Shape shape, String name) {
-        selectedToolShape = shape;
+    public void setSelectedToolShape(String name) {
         selectedShapeName = name;
         notifySubscribers();
     }
