@@ -12,14 +12,14 @@ public class InteractionModel {
     private Color selectedColour;
     private String selectedShapeName;
     private XShape selectedShape;
-    public XRectangle viewPort;
+    public ViewPort viewPort;
 
     /**
      * Constructor for InteractionModel
      */
     public InteractionModel() {
         subs = new ArrayList<>();
-        viewPort = new XRectangle(0, 0, 0.25, 0.25);
+        viewPort = new ViewPort(0, 0, 0.25, 0.25);
     }
 
     /**

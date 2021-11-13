@@ -42,6 +42,7 @@ public class DrawingApp extends Application {
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.DELETE || e.getCode() == KeyCode.BACK_SPACE) {
                 controller.deleteSelected();
+                miniController.deleteSelected();
             }
         });
         stage.setTitle("Drawing Application");

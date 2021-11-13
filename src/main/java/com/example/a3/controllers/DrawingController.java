@@ -9,15 +9,15 @@ import javafx.scene.paint.Color;
  * The controller to handle events from the view classes.
  */
 public class DrawingController {
-    private DrawingModel model;
-    private InteractionModel iModel;
-    double prevX, prevY;
+    protected DrawingModel model;
+    protected InteractionModel iModel;
+    protected double prevX, prevY;
 
-    private enum State {
+    protected enum State {
         READY, PREPARE_CREATE, RESIZING, SELECTED, MOVING
     }
 
-    private State currentState;
+    protected State currentState;
 
     /**
      * Constructor for DrawingController
