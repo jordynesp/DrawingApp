@@ -117,12 +117,14 @@ public class DrawingView extends StackPane implements ModelSubscriber {
      */
     public void setController(DrawingController newController) {
         // re-draw canvas when application is resized
-        myCanvas.widthProperty().addListener((observable, oldVal, newVal) -> {
+        this.widthProperty().addListener((observable, oldVal, newVal) -> {
             myCanvas.setWidth(newVal.doubleValue());
+            newController.setViewPortWidth(newVal.doubleValue()/docWidth);
             draw();
         });
-        myCanvas.heightProperty().addListener((observable, oldVal, newVal) -> {
+        this.heightProperty().addListener((observable, oldVal, newVal) -> {
             myCanvas.setHeight(newVal.doubleValue());
+            newController.setViewPortHeight(newVal.doubleValue()/docHeight);
             draw();
         });
         // event handlers for interaction on canvas

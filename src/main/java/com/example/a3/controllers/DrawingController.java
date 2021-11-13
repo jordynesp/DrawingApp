@@ -69,6 +69,24 @@ public class DrawingController {
     }
 
     /**
+     * Set the width of the viewport
+     * @param newWidth the new width
+     */
+    public void setViewPortWidth(double newWidth) {
+        iModel.viewPort.width = newWidth;
+        iModel.notifySubscribers();
+    }
+
+    /**
+     * Set the height of the viewport
+     * @param newHeight the new height
+     */
+    public void setViewPortHeight(double newHeight) {
+        iModel.viewPort.height = newHeight;
+        iModel.notifySubscribers();
+    }
+
+    /**
      * Designate what the controller should do
      * based on state when a mouse is pressed
      * @param normX normalized x coordinate
@@ -207,4 +225,5 @@ public class DrawingController {
             }
         }
     }
+
 }
