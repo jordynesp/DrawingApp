@@ -42,4 +42,31 @@ public class ViewPort extends XRectangle {
         handle.moveHandle(x, y, width, height);
     }
 
+    /**
+     * Move the viewport based on main view panning
+     * @param newX newest X location
+     * @param newY newest Y location
+     * @param prevX X location on mouse press
+     * @param prevY Y location on mouse press
+     */
+    public void pan(double newX, double newY, double prevX, double prevY) {
+        x = x + (prevX - newX);
+        y = y + (prevY - newY);
+        if (x + width >= 1) {
+            x = 1 - width;
+        }
+        if (x <= 0) {
+            x = 0;
+        }
+        if (y + height >= 1) {
+            y = 1 - height;
+        }
+        if (y <= 0) {
+            y = 0;
+        }
+        initialX = x;
+        initialY = y;
+        handle.moveHandle(x, y, width, height);
+    }
+
 }

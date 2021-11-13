@@ -147,4 +147,16 @@ public class DrawingModel {
         notifySubscribers();
     }
 
+    /**
+     * Move the viewport based on panning in the main view
+     * @param viewPort the viewport
+     * @param newX the newest X location
+     * @param newY the newest Y location
+     * @param prevX the original mouse press X location
+     * @param prevY the original mouse press Y location
+     */
+    public void pan(ViewPort viewPort, double newX, double newY, double prevX, double prevY) {
+        viewPort.pan(newX, newY, prevX, prevY);
+        notifySubscribers();
+    }
 }
