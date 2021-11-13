@@ -3,6 +3,7 @@ package com.example.a3.views;
 import com.example.a3.controllers.MiniDrawingController;
 import com.example.a3.models.ModelSubscriber;
 import com.example.a3.models.XShape;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**
@@ -13,13 +14,17 @@ public class MiniDrawingView extends DrawingView implements ModelSubscriber {
     /**
      * Constructor for MiniDrawingView
      */
-    public MiniDrawingView(double newDocWith, double newDocHeight) {
-        super(newDocWith, newDocHeight);
+    public MiniDrawingView(double newDocWidth, double newDocHeight) {
+        super(newDocWidth, newDocHeight);
         this.myCanvas.setWidth(100);
         this.myCanvas.setHeight(100);
         this.setStyle("-fx-background-color: darkgrey");
         this.setPrefSize(100, 100);
         this.setMaxSize(100, 100);
+        gc.setFill(Color.LIGHTGREY);
+        gc.fillRect(0, 0, 25, 25);
+        gc.setStroke(Color.YELLOW);
+        gc.strokeRect(0, 0, 25, 25);
     }
 
     /**
@@ -31,7 +36,9 @@ public class MiniDrawingView extends DrawingView implements ModelSubscriber {
         double height = myCanvas.getHeight();
         gc.clearRect(0, 0, width, height);
         gc.setLineWidth(1.0);
-
+        gc.setFill(Color.LIGHTGREY);
+        gc.fillRect(iModel.viewPort.x*width, iModel.viewPort.y*height,
+                iModel.viewPort.width*width, iModel.viewPort.height*height);
         for (XShape shape : model.getShapes()) {
             gc.setFill(shape.getColourName());
             gc.setStroke(Color.BLACK);
@@ -67,6 +74,9 @@ public class MiniDrawingView extends DrawingView implements ModelSubscriber {
                 }
             }
         }
+        gc.setStroke(Color.YELLOW);
+        gc.strokeRect(iModel.viewPort.x*width, iModel.viewPort.y*height,
+                iModel.viewPort.width*width, iModel.viewPort.height*height);
     }
 
     /**

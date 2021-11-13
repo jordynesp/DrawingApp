@@ -1,7 +1,6 @@
 package com.example.a3.models;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 
@@ -13,15 +12,14 @@ public class InteractionModel {
     private Color selectedColour;
     private String selectedShapeName;
     private XShape selectedShape;
-    private double viewLeft, viewTop;
+    public XRectangle viewPort;
 
     /**
      * Constructor for InteractionModel
      */
     public InteractionModel() {
         subs = new ArrayList<>();
-        viewLeft = 0;
-        viewTop = 0;
+        viewPort = new XRectangle(0, 0, 0.25, 0.25);
     }
 
     /**

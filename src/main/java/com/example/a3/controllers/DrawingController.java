@@ -4,7 +4,6 @@ import com.example.a3.models.DrawingModel;
 import com.example.a3.models.InteractionModel;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 /**
  * The controller to handle events from the view classes.

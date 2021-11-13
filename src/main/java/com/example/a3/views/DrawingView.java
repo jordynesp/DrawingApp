@@ -16,7 +16,7 @@ public class DrawingView extends StackPane implements ModelSubscriber {
     protected GraphicsContext gc;
     protected DrawingModel model;
     protected InteractionModel iModel;
-    private final double[] dashPattern;
+    protected double[] dashPattern;
     protected double docWidth, docHeight;
 
     /**
