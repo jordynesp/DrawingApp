@@ -1,8 +1,3 @@
-Jordyn Espenant
-NSID: jde843
-# 11271708
-CMPT 381 A3
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Organization:
 - Application class:
     src/main/java/com/example/a3/application
