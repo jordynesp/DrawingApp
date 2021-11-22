@@ -24,4 +24,4 @@ and run the main() function.
 
 Note:
 - everything is implemented except for shrinking of the canvas
-which I could not figure out (it does grow properly though)
+at this point in time
